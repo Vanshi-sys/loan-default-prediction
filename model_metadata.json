@@ -1,0 +1,10 @@
+{
+    "model": "XGBoost",
+    "task": "Binary Classification",
+    "input_features": 31,
+    "transformed_features": 915,
+    "validation_roc_auc": 0.7191,
+    "validation_pr_auc": 0.3265,
+    "class_0_probability": 0.45681262016296387,
+    "class_1_probability": 0.5431873798370361
+}
