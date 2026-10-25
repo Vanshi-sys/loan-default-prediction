@@ -5,3 +5,7 @@ __pycache__/
 *.log
 .ipynb_checkpoints/
 .DS_Store
+prediction_history.db
+prediction_history.db-journal
+prediction_history.db-shm
+prediction_history.db-wal

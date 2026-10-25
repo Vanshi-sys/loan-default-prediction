@@ -7,6 +7,9 @@ from datetime import date
 
 from src.predict import predict_loan
 from src.monitoring import monitored_predict, check_model_health
+from src.prediction_history import (
+    predict_and_record, get_recent_predictions, get_history_summary
+)
 from src.shap_explainer import explain_prediction
 
 
@@ -23,7 +26,7 @@ with st.sidebar:
     st.title("Loan Analytics")
     page = st.radio(
         "Navigation",
-        ["Overview", "Loan Prediction", "Model Insights"],
+        ["Overview", "Loan Prediction", "Model Insights", "Prediction Monitoring"],
         index=0
     )
 
@@ -80,6 +83,53 @@ elif page == "Model Insights":
         "Class 1 must not automatically be interpreted as confirmed default."
     )
 
+
+elif page == "Prediction Monitoring":
+    st.subheader("Prediction Monitoring")
+    st.caption(
+        "Operational history from this app instance. Raw borrower inputs "
+        "are not stored. Local history may reset after a restart or redeploy."
+    )
+
+    summary = get_history_summary()
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Total Predictions", summary["total_predictions"])
+    c2.metric("Class 0 Results", summary["class_0_count"])
+    c3.metric("Class 1 Results", summary["class_1_count"])
+    c4.metric("Average Latency", f'{summary["average_latency_ms"]:.1f} ms')
+
+    st.metric(
+        "Average Class 1 Probability",
+        f'{summary["average_class_1_probability"]:.2%}'
+    )
+
+    recent = get_recent_predictions(100)
+    if recent:
+        history_df = pd.DataFrame(recent)
+        history_df = history_df.rename(columns={
+            "timestamp_utc": "Timestamp (UTC)",
+            "operation": "Operation",
+            "prediction": "Predicted Class",
+            "probability_class_0": "Class 0 Probability",
+            "probability_class_1": "Class 1 Probability",
+            "latency_ms": "Latency (ms)",
+        })
+        st.subheader("Recent Predictions")
+        st.dataframe(history_df, use_container_width=True, hide_index=True)
+
+        chart_df = history_df[["Operation", "Predicted Class"]].copy()
+        chart_df["Predicted Class"] = chart_df["Predicted Class"].astype(str)
+        counts = chart_df.groupby(
+            ["Operation", "Predicted Class"]
+        ).size().unstack(fill_value=0)
+        st.subheader("Prediction Class Distribution")
+        st.bar_chart(counts)
+    else:
+        st.info(
+            "No predictions recorded yet. Generate a sample or manual "
+            "prediction to populate this dashboard."
+        )
+
 else:
     st.subheader("Loan Prediction")
     st.info(
@@ -121,7 +171,7 @@ else:
             "earliest_cr_line": "Jan-00",
         }
         try:
-            demo_result = monitored_predict(predict_loan, sample_input, "sample")
+            demo_result = predict_and_record(predict_loan, sample_input, "sample")
             st.success("Sample prediction generated")
             a, b, c = st.columns(3)
             a.metric("Predicted class", str(demo_result["prediction"]))
@@ -396,7 +446,7 @@ else:
                 st.error("Enter a ZIP code prefix containing exactly 3 digits.")
                 st.stop()
 
-            result = monitored_predict(predict_loan, raw_input, "manual")
+            result = predict_and_record(predict_loan, raw_input, "manual")
 
             probability_0 = result["probability_class_0"]
             probability_1 = result["probability_class_1"]
