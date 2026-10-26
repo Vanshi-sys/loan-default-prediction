@@ -1,0 +1,49 @@
+{
+  "brand": {
+    "name": "Loan Analytics",
+    "subtitle": "Credit Risk Intelligence"
+  },
+  "version": "1.0.0",
+  "palettes": {
+    "light": {
+      "bg": "#F7F3EE",
+      "surface": "#FFFFFF",
+      "surface_alt": "#F0E9E0",
+      "sidebar": "#F2ECE4",
+      "border": "#E2D8CB",
+      "text": "#292321",
+      "muted": "#6F645D",
+      "primary": "#A8442E",
+      "primary_hover": "#8E3724",
+      "primary_soft": "#F4E3DC",
+      "primary_text": "#FFFFFF",
+      "accent": "#6E9586",
+      "accent_text": "#3E6354",
+      "accent_soft": "#E3EDE8",
+      "warning": "#9A6B1F",
+      "warning_soft": "#F5EAD3",
+      "danger": "#8F2F22",
+      "danger_soft": "#F3DAD4"
+    },
+    "dark": {
+      "bg": "#19161F",
+      "surface": "#25212C",
+      "surface_alt": "#2E2936",
+      "sidebar": "#1E1A25",
+      "border": "#3B3544",
+      "text": "#F7F0E8",
+      "muted": "#B0A6AD",
+      "primary": "#C9735B",
+      "primary_hover": "#D88A73",
+      "primary_soft": "#3C2A28",
+      "primary_text": "#19161F",
+      "accent": "#86AB9B",
+      "accent_text": "#A4C6B7",
+      "accent_soft": "#24342F",
+      "warning": "#D0A257",
+      "warning_soft": "#3A3022",
+      "danger": "#D9806C",
+      "danger_soft": "#3F2724"
+    }
+  }
+}
