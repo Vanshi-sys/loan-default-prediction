@@ -11,6 +11,12 @@ from src.prediction_history import (
     predict_and_record, get_recent_predictions, get_history_summary
 )
 from src.shap_explainer import explain_prediction
+import json
+
+APP_DIR = Path(__file__).resolve().parent
+with open(APP_DIR / "model_metadata.json", "r", encoding="utf-8") as f:
+    metadata = json.load(f)
+
 
 
 st.set_page_config(
