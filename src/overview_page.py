@@ -424,9 +424,16 @@ def _theme_font_color() -> Optional[str]:
 
 
 def _base_layout(fig: go.Figure, title: str, height: int) -> None:
-    fig.update_layout(font=dict(color="#263238", family="Arial"))
     fig.update_layout(
-        title=dict(text=title, x=0, xanchor="left", font=dict(size=14)),
+        font=dict(color="#263238", family="Arial"),
+        title_font=dict(color="#263238"),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        uniformtext_minsize=12,
+        uniformtext_mode="show"
+    )
+    fig.update_layout(
+        title=dict(text=title, x=0, xanchor="left", font=dict(size=14, color="#263238")),
         height=height,
         margin=dict(l=10, r=40, t=54, b=44),
         paper_bgcolor="rgba(0,0,0,0)",
@@ -438,11 +445,18 @@ def _base_layout(fig: go.Figure, title: str, height: int) -> None:
     )
     color = _theme_font_color()
     if color:
-        fig.update_layout(font=dict(color="#263238", family="Arial"))
+        fig.update_layout(
+        font=dict(color="#263238", family="Arial"),
+        title_font=dict(color="#263238"),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        uniformtext_minsize=12,
+        uniformtext_mode="show"
+    )
     fig.update_yaxes(automargin=True, tickfont=dict(size=13, color="#52616B"), color="#52616B", showgrid=False, fixedrange=True)
     fig.update_xaxes(
         showgrid=True, gridcolor="#D9DDE1", zeroline=False, color="#52616B",
-        showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12),
+        showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12, color="#52616B"),
     )
 
 
@@ -494,7 +508,7 @@ def build_metrics_figure(m: OverviewMetrics) -> Optional[go.Figure]:
     _base_layout(fig, "Validation metrics (higher is better)", 120 + 62 * len(rows))
     fig.update_xaxes(
         range=[0, 1.12], tickvals=[0, 0.2, 0.4, 0.6, 0.8, 1.0], tickformat=".1f",
-        title=dict(text="Score (0 to 1)", font=dict(size=12)),
+        title=dict(text="Score (0 to 1)", font=dict(size=12, color="#52616B")),
     )
     fig.update_layout(showlegend=bool(refs))
     return fig
@@ -527,7 +541,7 @@ def build_feature_expansion_figure(m: OverviewMetrics) -> Optional[go.Figure]:
     _base_layout(fig, "Feature count before and after preprocessing", 120 + 62 * len(rows))
     fig.update_xaxes(
         range=[0, max(r[1] for r in rows) * 1.2], tickformat=",d",
-        title=dict(text="Number of columns", font=dict(size=12)),
+        title=dict(text="Number of columns", font=dict(size=12, color="#52616B")),
     )
     fig.update_layout(showlegend=False)
     return fig
