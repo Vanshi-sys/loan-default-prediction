@@ -424,6 +424,7 @@ def _theme_font_color() -> Optional[str]:
 
 
 def _base_layout(fig: go.Figure, title: str, height: int) -> None:
+    fig.update_layout(font=dict(color="#263238", family="Arial"))
     fig.update_layout(
         title=dict(text=title, x=0, xanchor="left", font=dict(size=14)),
         height=height,
@@ -437,10 +438,10 @@ def _base_layout(fig: go.Figure, title: str, height: int) -> None:
     )
     color = _theme_font_color()
     if color:
-        fig.update_layout(font=dict(color=color))
-    fig.update_yaxes(automargin=True, tickfont=dict(size=13), showgrid=False, fixedrange=True)
+        fig.update_layout(font=dict(color="#263238", family="Arial"))
+    fig.update_yaxes(automargin=True, tickfont=dict(size=13, color="#52616B"), color="#52616B", showgrid=False, fixedrange=True)
     fig.update_xaxes(
-        showgrid=True, gridcolor="rgba(128,128,128,0.22)", zeroline=False,
+        showgrid=True, gridcolor="#D9DDE1", zeroline=False, color="#52616B",
         showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12),
     )
 
