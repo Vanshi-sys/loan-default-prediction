@@ -425,14 +425,15 @@ def _theme_font_color() -> Optional[str]:
 
 def _base_layout(fig, title, height):
     fig.update_layout(
-        title=dict(text=title, font=dict(size=16, color="#292321")),
-        height=height,
+        title=dict(text=title, font=dict(size=14, color="#292321")),
+        height=max(height, 250),
         font=dict(family="Arial", size=13, color="#292321"),
-        title_font=dict(family="Arial", size=16, color="#292321"),
+        title_font=dict(family="Arial", size=14, color="#292321"),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         uniformtext_minsize=12,
         uniformtext_mode="show",
+        margin=dict(l=65, r=35, t=75, b=75),
     )
     fig.update_xaxes(
         showline=True, linecolor="#64748B", linewidth=1.5,
@@ -492,13 +493,15 @@ def build_metrics_figure(m: OverviewMetrics) -> Optional[go.Figure]:
             mode="markers",
             marker=dict(symbol="line-ns-open", size=34, line=dict(width=3, color="rgba(128,128,128,0.95)")),
             text=[r["ref_text"] for r in refs],
+            textposition="middle right",
+            textfont=dict(color="#292321", size=12, family="Arial"),
             name="No-skill reference",
             hovertemplate="<b>%{y}</b><br>%{text}: %{x:.4f}<extra></extra>",
         ))
     _base_layout(fig, "Validation metrics (higher is better)", 120 + 62 * len(rows))
     fig.update_xaxes(
         range=[0, 1.12], tickvals=[0, 0.2, 0.4, 0.6, 0.8, 1.0], tickformat=".1f",
-        title=dict(text="Score (0 to 1)", font=dict(size=12, color="#52616B")),
+        title=dict(text="Score (0 to 1)", font=dict(size=12, color="#292321"), standoff=12),
     )
     fig.update_layout(showlegend=bool(refs))
     return fig
@@ -531,7 +534,7 @@ def build_feature_expansion_figure(m: OverviewMetrics) -> Optional[go.Figure]:
     _base_layout(fig, "Feature count before and after preprocessing", 120 + 62 * len(rows))
     fig.update_xaxes(
         range=[0, max(r[1] for r in rows) * 1.2], tickformat=",d",
-        title=dict(text="Number of columns", font=dict(size=12, color="#52616B")),
+        title=dict(text="Number of columns", font=dict(size=12, color="#292321"), standoff=12),
     )
     fig.update_layout(showlegend=False)
     return fig
