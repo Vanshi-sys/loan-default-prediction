@@ -167,6 +167,37 @@ def apply_theme():
     """Inject the design system CSS. Call once, right after set_page_config."""
     theme = current_theme()
     st.markdown(build_css(theme), unsafe_allow_html=True)
+
+    # Prediction form contrast patch
+
+    st.markdown("""
+    <style>
+    .stApp [data-testid="stNumberInput"] label,
+    .stApp [data-testid="stTextInput"] label,
+    .stApp [data-testid="stSelectbox"] label,
+    .stApp [data-testid="stCheckbox"] label,
+    .stApp [data-testid="stWidgetLabel"] p {
+        color: #F8FAFC !important;
+        -webkit-text-fill-color: #F8FAFC !important;
+        opacity: 1 !important;
+    }
+    .stApp input,
+    .stApp [data-baseweb="input"] input {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        caret-color: #FFFFFF !important;
+    }
+    .stApp [data-baseweb="select"] * {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }
+    [data-baseweb="popover"] [role="option"] {
+        color: #FFFFFF !important;
+        background: #302A36 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.markdown("""<style>
 /* Loan prediction: accessible form input contrast */
 .stApp input,
