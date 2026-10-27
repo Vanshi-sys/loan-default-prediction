@@ -32,7 +32,7 @@ from src.prediction_history import (
     predict_and_record, get_recent_predictions, get_history_summary
 )
 from src.shap_explainer import explain_prediction
-from src.ui_theme import hero_banner
+from src.ui_theme import hero_banner, apply_theme
 import json
 from src.overview_page import render_overview
 from src.prediction_page import render_prediction_page
@@ -49,6 +49,8 @@ st.set_page_config(
     page_icon="💳",
     layout="wide"
 )
+
+apply_theme()
 
 # Step 3 design system: navigation, model status, and theme
 active_page = render_sidebar(model_status=discover_model_status(APP_DIR))
