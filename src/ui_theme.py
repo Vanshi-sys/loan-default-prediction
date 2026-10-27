@@ -167,6 +167,34 @@ def apply_theme():
     """Inject the design system CSS. Call once, right after set_page_config."""
     theme = current_theme()
     st.markdown(build_css(theme), unsafe_allow_html=True)
+    st.markdown("""<style>
+/* Loan prediction: accessible form input contrast */
+.stApp input,
+.stApp textarea,
+.stApp [data-baseweb="input"] input,
+.stApp [data-baseweb="textarea"] textarea {
+    color: #F8FAFC !important;
+    -webkit-text-fill-color: #F8FAFC !important;
+    caret-color: #FFFFFF !important;
+    opacity: 1 !important;
+}
+.stApp input::placeholder,
+.stApp textarea::placeholder {
+    color: #D1CBD6 !important;
+    -webkit-text-fill-color: #D1CBD6 !important;
+    opacity: 1 !important;
+}
+.stApp [data-baseweb="select"] *,
+.stApp [role="combobox"] {
+    color: #F8FAFC !important;
+    -webkit-text-fill-color: #F8FAFC !important;
+}
+.stApp [data-baseweb="menu"],
+.stApp [role="listbox"],
+.stApp [role="option"] {
+    color: #F8FAFC !important;
+}
+</style>""", unsafe_allow_html=True)
     return theme or "auto"
 
 

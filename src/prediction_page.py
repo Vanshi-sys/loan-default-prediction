@@ -1107,14 +1107,18 @@ def _render_card(norm: Dict[str, Any], labels: Dict[str, str], label_src: Option
         headline = html.escape(format_exact(pl))
         sub = "Label returned by the prediction code"
     elif pc is not None:
-        headline = html.escape(_class_display(format_exact(pc), labels))
-        sub = "Model output for this loan"
+        headline = "Predicted class: " + html.escape(_class_display(format_exact(pc), labels))
+        sub = "The model's most likely class for this loan"
     else:
         headline = "Class probabilities returned"
         sub = "The prediction function did not return a single class"
     rows = ""
     for name, val in (norm.get("probabilities") or []):
-        shown = html.escape(format_exact(val))
+        frac = _fraction(val)
+        if frac is not None and 0.0 <= frac <= 1.0:
+            shown = "%.2f%%" % (frac * 100.0)
+        else:
+            shown = html.escape(format_exact(val))
         frac = _fraction(val)
         bar = ""
         if frac is not None:
@@ -1126,7 +1130,7 @@ def _render_card(norm: Dict[str, Any], labels: Dict[str, str], label_src: Option
     prob_block = ""
     if rows:
         prob_block = ("<div style='margin-top:1rem;font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;opacity:0.7;'>"
-                      "Model-returned probabilities</div>" + rows)
+                      "Chance assigned to each model class</div>" + rows)
     card = ("<div class='lp-result-card' style='border:1px solid rgba(59,130,246,0.45);border-left:8px solid #3b82f6;"
             "border-radius:14px;padding:1.2rem 1.4rem;margin:0.5rem 0 0.8rem 0;background:rgba(59,130,246,0.08);'>"
             "<div style='font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;opacity:0.7;'>%s</div>"
