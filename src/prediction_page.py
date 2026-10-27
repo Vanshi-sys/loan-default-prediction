@@ -1130,6 +1130,15 @@ def _render_card(norm: Dict[str, Any], labels: Dict[str, str], label_src: Option
         sub = "The prediction function did not return a single class"
     rows = ""
     for name, val in (norm.get("probabilities") or []):
+        # Demo wording: assumes class 1 = default and class 0 = non-default.
+        raw_name = str(name).strip().lower()
+        if raw_name in ("probability_class_1", "class 1", "1"):
+            display_name = "Chance of default"
+        elif raw_name in ("probability_class_0", "class 0", "0"):
+            display_name = "Chance of no default"
+        else:
+            display_name = _class_display(name, labels)
+
         frac = _fraction(val)
         if frac is not None and 0.0 <= frac <= 1.0:
             shown = "%.2f%%" % (frac * 100.0)
@@ -1142,7 +1151,7 @@ def _render_card(norm: Dict[str, Any], labels: Dict[str, str], label_src: Option
                    "<div style='height:8px;border-radius:4px;width:%.4f%%;background:#3b82f6;'></div></div>" % (frac * 100.0))
         rows += ("<div style='margin:0.65rem 0;'><div style='display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;'>"
                  "<span>%s</span><span style='font-weight:600;font-variant-numeric:tabular-nums;word-break:break-all;'>%s</span></div>%s</div>"
-                 % (html.escape(_class_display(name, labels)), shown, bar))
+                 % (html.escape(display_name), shown, bar))
     prob_block = ""
     if rows:
         prob_block = ("<div style='margin-top:1rem;font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;opacity:0.7;'>"
