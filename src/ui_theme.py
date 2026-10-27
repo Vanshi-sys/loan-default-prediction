@@ -172,28 +172,45 @@ def apply_theme():
 
     st.markdown("""
     <style>
+    /* Light page: dark readable text */
     .stApp [data-testid="stNumberInput"] label,
     .stApp [data-testid="stTextInput"] label,
     .stApp [data-testid="stSelectbox"] label,
     .stApp [data-testid="stCheckbox"] label,
     .stApp [data-testid="stWidgetLabel"] p {
-        color: #F8FAFC !important;
-        -webkit-text-fill-color: #F8FAFC !important;
+        color: #292321 !important;
+        -webkit-text-fill-color: #292321 !important;
         opacity: 1 !important;
     }
-    .stApp input,
-    .stApp [data-baseweb="input"] input {
+
+    /* Keep values readable in the dark prediction form */
+    .stApp [data-testid="stForm"] input,
+    .stApp [data-testid="stForm"] textarea,
+    .stApp [data-testid="stForm"] [data-baseweb="input"] input {
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         caret-color: #FFFFFF !important;
     }
-    .stApp [data-baseweb="select"] * {
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
+
+    /* Explicit dark text for light overview cards and captions */
+    .ld-card, .ld-card *,
+    .ld-metric-label, .ld-metric-value, .ld-metric-delta,
+    .ld-page-sub, .ld-card-body, .ld-card-footer {
+        color: #292321;
     }
+
+    /* Keep native Streamlit metric text dark on light cards */
+    [data-testid="stMetricLabel"] p,
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricDelta"] {
+        color: #292321 !important;
+        -webkit-text-fill-color: #292321 !important;
+    }
+
+    /* Dark text on light dropdown menus */
     [data-baseweb="popover"] [role="option"] {
-        color: #FFFFFF !important;
-        background: #302A36 !important;
+        color: #292321 !important;
+        background: #FFFFFF !important;
     }
     </style>
     """, unsafe_allow_html=True)
