@@ -1107,8 +1107,24 @@ def _render_card(norm: Dict[str, Any], labels: Dict[str, str], label_src: Option
         headline = html.escape(format_exact(pl))
         sub = "Label returned by the prediction code"
     elif pc is not None:
-        headline = "Predicted class: " + html.escape(_class_display(format_exact(pc), labels))
-        sub = "The model's most likely class for this loan"
+        # PROVISIONAL DEMO LABELS ONLY.
+        # Assumption for today's demo: class 1 = default, class 0 = non-default.
+        try:
+            predicted_num = int(float(pc))
+        except (TypeError, ValueError):
+            predicted_num = None
+
+        if predicted_num == 1:
+            headline = "Likely to default"
+            sub = "The model flags this loan as higher risk"
+        elif predicted_num == 0:
+            headline = "Less likely to default"
+            sub = "The model flags this loan as lower risk"
+        else:
+            headline = "Predicted class: " + html.escape(
+                _class_display(format_exact(pc), labels)
+            )
+            sub = "The model's most likely class for this loan"
     else:
         headline = "Class probabilities returned"
         sub = "The prediction function did not return a single class"
