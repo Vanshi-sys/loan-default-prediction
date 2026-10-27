@@ -168,6 +168,56 @@ def apply_theme():
     theme = current_theme()
     st.markdown(build_css(theme), unsafe_allow_html=True)
 
+    # GLOBAL LIGHT-SURFACE CONTRAST FIX
+
+    st.markdown("""
+    <style>
+    /* Default readable text on the cream/light page */
+    .stApp {
+        color: #292321;
+    }
+    .stApp [data-testid="stMarkdownContainer"] p,
+    .stApp [data-testid="stMarkdownContainer"] li,
+    .stApp [data-testid="stMarkdownContainer"] strong,
+    .stApp [data-testid="stCaptionContainer"],
+    .stApp [data-testid="stMetricLabel"],
+    .stApp [data-testid="stMetricValue"],
+    .stApp [data-testid="stMetricDelta"] {
+        color: #292321 !important;
+        -webkit-text-fill-color: #292321 !important;
+    }
+    /* Overview metric and information cards */
+    .stApp [data-testid="stMetric"],
+    .stApp [data-testid="stMetric"] * {
+        color: #292321 !important;
+        -webkit-text-fill-color: #292321 !important;
+    }
+    /* Form labels: readable on the dark form panel */
+    .stApp [data-testid="stForm"] [data-testid="stWidgetLabel"] p,
+    .stApp [data-testid="stForm"] label {
+        color: #F8FAFC !important;
+        -webkit-text-fill-color: #F8FAFC !important;
+        opacity: 1 !important;
+    }
+    /* Entered values stay readable on dark inputs */
+    .stApp [data-testid="stForm"] input,
+    .stApp [data-testid="stForm"] textarea,
+    .stApp [data-testid="stForm"] [data-baseweb="input"] input {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        caret-color: #FFFFFF !important;
+    }
+    /* Readable result card */
+    .lp-result-card,
+    .lp-result-card * {
+        color: #172033 !important;
+        -webkit-text-fill-color: #172033 !important;
+    }
+    /* Charts should retain their own configured colors */
+    </style>
+    """, unsafe_allow_html=True)
+
+
     # Prediction form contrast patch
 
     st.markdown("""
