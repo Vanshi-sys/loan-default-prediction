@@ -425,10 +425,10 @@ def _theme_font_color() -> Optional[str]:
 
 def _base_layout(fig, title, height):
     fig.update_layout(
-        title=dict(text=title, font=dict(size=18, color="#292321")),
+        title=dict(text=title, font=dict(size=16, color="#292321")),
         height=height,
         font=dict(family="Arial", size=13, color="#292321"),
-        title_font=dict(family="Arial", size=18, color="#292321"),
+        title_font=dict(family="Arial", size=16, color="#292321"),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         uniformtext_minsize=12,
