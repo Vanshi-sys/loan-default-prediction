@@ -443,20 +443,18 @@ def _base_layout(fig: go.Figure, title: str, height: int) -> None:
         hovermode="closest",
         legend=dict(orientation="h", x=1, xanchor="right", y=1.02, yanchor="bottom", font=dict(size=11)),
     )
-    color = _theme_font_color()
-    if color:
-        fig.update_layout(
-        font=dict(color="#263238", family="Arial"),
-        title_font=dict(color="#263238"),
+    # Final high-contrast defaults for charts on the light dashboard.
+    fig.update_layout(
+        font=dict(family="Arial", size=13, color="#292321"),
+        title_font=dict(color="#292321"),
+        legend=dict(font=dict(color="#292321")),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        uniformtext_minsize=12,
-        uniformtext_mode="show"
     )
-    fig.update_yaxes(automargin=True, tickfont=dict(size=13, color="#52616B"), color="#52616B", showgrid=False, fixedrange=True)
+    fig.update_yaxes(automargin=True, tickfont=dict(size=13, color="#292321"), color="#292321", showgrid=False, fixedrange=True)
     fig.update_xaxes(
-        showgrid=True, gridcolor="#D9DDE1", zeroline=False, color="#52616B",
-        showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12, color="#52616B"),
+        showgrid=True, gridcolor="#D9DDE1", zeroline=False, color="#292321",
+        showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12, color="#292321"),
     )
 
 
