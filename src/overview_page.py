@@ -423,40 +423,32 @@ def _theme_font_color() -> Optional[str]:
     return None
 
 
-def _base_layout(fig: go.Figure, title: str, height: int) -> None:
+def _base_layout(fig, title, height):
     fig.update_layout(
-        font=dict(color="#263238", family="Arial"),
-        title_font=dict(color="#263238"),
+        title=dict(text=title, font=dict(size=18, color="#292321")),
+        height=height,
+        font=dict(family="Arial", size=13, color="#292321"),
+        title_font=dict(family="Arial", size=18, color="#292321"),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         uniformtext_minsize=12,
-        uniformtext_mode="show"
+        uniformtext_mode="show",
     )
-    fig.update_layout(
-        title=dict(text=title, x=0, xanchor="left", font=dict(size=14, color="#263238")),
-        height=height,
-        margin=dict(l=10, r=40, t=54, b=44),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        bargap=0.45,
-        dragmode=False,
-        hovermode="closest",
-        legend=dict(orientation="h", x=1, xanchor="right", y=1.02, yanchor="bottom", font=dict(size=11)),
-    )
-    # Final high-contrast defaults for charts on the light dashboard.
-    fig.update_layout(
-        font=dict(family="Arial", size=13, color="#292321"),
-        title_font=dict(color="#292321"),
-        legend=dict(font=dict(color="#292321")),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-    )
-    fig.update_yaxes(automargin=True, tickfont=dict(size=13, color="#292321"), color="#292321", showgrid=False, fixedrange=True)
     fig.update_xaxes(
-        showgrid=True, gridcolor="#D9DDE1", zeroline=False, color="#292321",
-        showline=True, linecolor="rgba(128,128,128,0.4)", fixedrange=True, tickfont=dict(size=12, color="#292321"),
+        showline=True, linecolor="#64748B", linewidth=1.5,
+        ticks="outside", tickcolor="#64748B",
+        tickfont=dict(size=12, color="#334155"),
+        showgrid=True, gridcolor="#D9DDE1", gridwidth=1,
+        zeroline=False, automargin=True, fixedrange=True,
     )
-
+    fig.update_yaxes(
+        showline=True, linecolor="#64748B", linewidth=1.5,
+        ticks="outside", tickcolor="#64748B",
+        tickfont=dict(size=13, color="#334155"),
+        showgrid=True, gridcolor="#D9DDE1", gridwidth=1,
+        zeroline=False, automargin=True, fixedrange=True,
+    )
+    return fig
 
 def build_metrics_figure(m: OverviewMetrics) -> Optional[go.Figure]:
     """Horizontal bars for validation ROC-AUC / PR-AUC with direct labels."""
